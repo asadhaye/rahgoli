@@ -3,6 +3,7 @@ api_version = "2024-01"
 [[extensions]]
 name = "order-discount"
 handle = "order-discount"
+uid = "3dfee65d-f9a6-6dd6-37e5-f13423d290cf6d229b2f"
 type = "function"
 
 [extensions.capabilities]

@@ -3,4 +3,5 @@ api_version = "2024-01"
 [[extensions]]
 name = "fit-finder-ui"
 handle = "fit-finder-ui"
+uid = "fc6ad3af-ec5a-d49f-71f2-d8d66e63d65d28763ad5"
 type = "theme_app_extension"
