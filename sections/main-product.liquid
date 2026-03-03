@@ -1,0 +1,288 @@
+{% comment %}
+  Main Product Section for Rahgoli
+{% endcomment %}
+
+<style>
+  .product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+  }
+
+  .product__media-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .product__media-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .product__info-container {
+    position: sticky;
+    top: 120px;
+    height: fit-content;
+  }
+
+  .product__vendor {
+    font-size: 0.9rem;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .product__title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .product__price {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* Delivery Scenarios Styles */
+  .delivery-info {
+    padding: var(--spacing-sm);
+    background-color: #F9F9F9;
+    border-left: 4px solid var(--color-secondary);
+    margin-bottom: var(--spacing-md);
+    font-size: 0.85rem;
+  }
+
+  /* Tab Styles */
+  .pdp-tabs {
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pdp-tab {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pdp-tab__header {
+    width: 100%;
+    padding: var(--spacing-sm) 0;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pdp-tab__content {
+    display: none;
+    padding-bottom: var(--spacing-sm);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  .pdp-tab__content.is-active {
+    display: block;
+  }
+
+  /* Sticky Add to Cart (Mobile) */
+  .sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 10px var(--spacing-md);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    display: none; /* Desktop hidden */
+    z-index: 999;
+  }
+
+  @media (max-width: 990px) {
+    .product { grid-template-columns: 1fr; }
+    .sticky-atc { display: flex; align-items: center; justify-content: space-between; }
+  }
+</style>
+
+<div class="product container">
+  <div class="product__media-list">
+    {% for image in product.images %}
+      <div class="product__media-item">
+        <img src="{{ image | image_url: width: 1200 }}" alt="{{ image.alt }}">
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="product__info-container">
+    <div class="product__vendor">Official Stockist: {{ product.vendor }}</div>
+    <h1 class="product__title">{{ product.title }}</h1>
+    <div class="product__price">{{ product.price | money }}</div>
+
+    {% comment %} Dynamic Delivery Scenarios {% endcomment %}
+    <div class="delivery-info">
+      {% if product.metafields.custom.launch_date %}
+        <strong>PRE-ORDER:</strong> Expected Launch: {{ product.metafields.custom.launch_date | date: "%B %d, %Y" }}
+      {% elsif product.variants.first.inventory_quantity > 0 %}
+        <strong>READY TO SHIP:</strong> Dispatched within 24-48 hours.
+      {% else %}
+        <strong>STOCKIST UPDATING:</strong> We are awaiting stock confirmation from {{ product.vendor }}.
+      {% endif %}
+
+      {% comment %} Seasonal Eid Logic Wrapper {% endcomment %}
+      <div class="eid-confirmation" style="margin-top: 5px; color: var(--color-accent); font-weight: 600;">
+        {% comment %} Logic would go here to toggle based on settings.eid_mode {% endcomment %}
+        <span>★ Confirmed Delivery for Eid-ul-Adha</span>
+      </div>
+    </div>
+
+    <form method="post" action="/cart/add">
+      <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+      <button type="submit" class="button" style="width: 100%;">Add to Cart</button>
+    </form>
+
+    {% comment %} Delayed Delivery Discount Incentive {% endcomment %}
+    <p style="font-size: 0.75rem; margin-top: 10px; font-style: italic;">
+      * Want to wait? Choose shipping in 60 days at checkout for a 10% discount.
+    </p>
+
+    <div class="pdp-tabs">
+      <div class="pdp-tab">
+        <button class="pdp-tab__header" onclick="toggleTab(this)">Size Guide <span>+</span></button>
+        <div class="pdp-tab__content">
+          {% comment %} Pulling from metaobject reference linked to vendor {% endcomment %}
+          {{ product.vendor.metafields.custom.size_chart | default: "Standard Size Chart Applied." }}
+        </div>
+      </div>
+      
+      <div class="pdp-tab">
+        <button class="pdp-tab__header" onclick="toggleTab(this)">Care Instructions <span>+</span></button>
+        <div class="pdp-tab__content">
+          {{ product.metafields.custom.care_instructions | default: "Dry Clean Only recommended for luxury fabrics." }}
+        </div>
+      </div>
+
+      <div class="pdp-tab">
+        <button class="pdp-tab__header" onclick="toggleTab(this)">Disclaimer <span>+</span></button>
+        <div class="pdp-tab__content">
+          Luxury collections are non-refundable/non-exchangeable. Reporting window: 24 hours from receipt for any wrong/missing items.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sticky-atc">
+  <div>
+    <strong>{{ product.price | money }}</strong>
+  </div>
+  <button class="button">Add to Cart</button>
+</div>
+
+<script>
+  function toggleTab(btn) {
+    const content = btn.nextElementSibling;
+    content.classList.toggle('is-active');
+    btn.querySelector('span').innerText = content.classList.contains('is-active') ? '-' : '+';
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "default": "Text block",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity selector",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "share_label",
+          "label": "Share label",
+          "default": "Share"
+        }
+      ]
+    },
+    {
+      "type": "collapsible_tab",
+      "name": "Collapsible tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Collapsible tab",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "leather", "label": "Leather" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "ruler", "label": "Ruler" },
+            { "value": "heart", "label": "Heart" }
+          ],
+          "default": "none",
+          "label": "Icon"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
