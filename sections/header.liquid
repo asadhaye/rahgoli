@@ -1,0 +1,127 @@
+{% comment %}
+  Header Section with Sticky Behavior and Official Stockist Badge
+{% endcomment %}
+
+<style>
+  .header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    transition: transform 0.3s ease;
+  }
+
+  .header-top-bar {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    text-align: center;
+    padding: 0.5rem 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: 80px;
+  }
+
+  .header__logo {
+    text-align: center;
+  }
+
+  .header__logo-img {
+    max-height: 50px;
+    width: auto;
+  }
+
+  .header__menu {
+    display: flex;
+    gap: var(--spacing-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .header__icons {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+  }
+
+  .header__stockist-badge {
+    position: absolute;
+    left: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @media (max-width: 990px) {
+    .header {
+      grid-template-columns: auto 1fr auto;
+    }
+    .header__menu {
+      display: none; /* Hide for mobile initially */
+    }
+    .header__stockist-badge {
+      display: none;
+    }
+  }
+</style>
+
+<div class="header-wrapper" id="HeaderWrapper">
+  <div class="header-top-bar">
+    FREE SHIPPING ON ALL DOMESTIC ORDERS | OFFICIAL STOCKIST
+  </div>
+  
+  <header class="header container">
+    <div class="header__stockist-badge stockist-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      Official Stockist
+    </div>
+
+    <nav class="header__navigation" role="navigation">
+      <ul class="header__menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/collections/all">Collections</a></li>
+        <li><a href="/pages/designers">Designers</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <a href="/">
+          <img src="{{ section.settings.logo | image_url: width: 200 }}" class="header__logo-img" alt="{{ shop.name }}">
+        </a>
+      {%- else -%}
+        <a href="/" class="h2">{{ shop.name }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="header__icons">
+      <a href="/search">Search</a>
+      <a href="/account">Login</a>
+      <a href="/cart">Cart (0)</a>
+    </div>
+  </header>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,120 @@
+{% comment %}
+  Product Card Snippet for Rahgoli
+{% endcomment %}
+
+<style>
+  .product-card {
+    position: relative;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .product-card__image-wrapper {
+    position: relative;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background-color: #F5F5F5;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .product-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+
+  .product-card:hover .product-card__image {
+    transform: scale(1.1);
+  }
+
+  .product-card__badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 2;
+  }
+
+  .badge {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  .badge--accent { background-color: var(--color-accent); color: white; }
+  .badge--secondary { background-color: var(--color-secondary); color: white; }
+  .badge--white { background-color: white; color: black; border: 1px solid #EEE; }
+
+  .product-card__info {
+    text-align: center;
+  }
+
+  .product-card__vendor {
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+  }
+
+  .product-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    margin: 0 0 var(--spacing-xs) 0;
+  }
+
+  .product-card__price {
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+</style>
+
+<div class="product-card">
+  <div class="product-card__image-wrapper">
+    <div class="product-card__badges">
+      {%- if product.available == false -%}
+        <span class="badge badge--white">Sold Out</span>
+      {%- elsif product.compare_at_price > product.price -%}
+        <span class="badge badge--accent">Sale</span>
+      {%- endif -%}
+
+      {% comment %} Example Material Badge from Metafield {% endcomment %}
+      {% if product.metafields.custom.material != blank %}
+        <span class="badge badge--secondary">{{ product.metafields.custom.material }}</span>
+      {% endif %}
+
+      {% comment %} Ready to ship badge logic requested by user {% endcomment %}
+      {% if product.variants.first.inventory_quantity > 0 %}
+         <span class="badge badge--white">Ready to Ship</span>
+      {% endif %}
+    </div>
+
+    <a href="{{ product.url }}">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | image_url: width: 600 }}" class="product-card__image" alt="{{ product.title }}">
+      {% else %}
+        <div class="product-card__image" style="background: #EEE;"></div>
+      {% endif %}
+    </a>
+  </div>
+
+  <div class="product-card__info">
+    <div class="product-card__vendor">{{ product.vendor }}</div>
+    <h3 class="product-card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    <div class="product-card__price">
+      {{ product.price | money }}
+    </div>
+  </div>
+</div>

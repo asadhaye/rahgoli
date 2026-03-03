@@ -1,0 +1,132 @@
+{% comment %}
+  Hero Slider Section
+{% endcomment %}
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    min-height: 500px;
+    background-color: #EEE; /* Placeholder bg */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    padding: var(--spacing-lg);
+    background: rgba(253, 246, 227, 0.9); /* Antique Ivory with transparency */
+    max-width: 600px;
+    margin-left: 10%;
+    animation: slideUp 1s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero__usp-list {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    font-size: 0.8rem;
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .hero__title {
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.1;
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+    color: #444;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      height: 60vh;
+    }
+    .hero__content {
+      margin: 0 var(--spacing-md);
+      padding: var(--spacing-md);
+    }
+    .hero__title {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<div class="hero">
+  {% if section.settings.image != blank %}
+    <img src="{{ section.settings.image | image_url: width: 2000 }}" 
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+         alt="{{ section.settings.title }}">
+  {% endif %}
+  
+  <div class="hero__content">
+    <div class="stockist-badge">
+       Official Stockist
+    </div>
+    <h1 class="hero__title">{{ section.settings.title }}</h1>
+    <p class="hero__subtitle">{{ section.settings.subtitle }}</p>
+    
+    <a href="{{ section.settings.button_link }}" class="button">
+      {{ section.settings.button_label }}
+    </a>
+
+    <div class="hero__usp-list">
+      <span>✓ Express Shipping</span>
+      <span>✓ 100% Original Brands</span>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Luxury Pakistani Couture"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Curated collections from the most prestigious designers, delivered right to your door."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Explore Collections"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider"
+    }
+  ]
+}
+{% endschema %}

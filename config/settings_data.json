@@ -1,0 +1,17 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "colors_solid_button_labels": "#ffffff",
+      "colors_accent_1": "#6b0d0d",
+      "colors_accent_2": "#c5a059",
+      "colors_text": "#1a1a1a",
+      "colors_outline_button_labels": "#1a1a1a",
+      "colors_background_1": "#fdf6e3",
+      "colors_background_2": "#ffffff",
+      "colors_placeholder_focus": "#6b0d0d",
+      "type_header_font_family": "Playfair Display",
+      "type_body_font_family": "Inter"
+    }
+  }
+}
