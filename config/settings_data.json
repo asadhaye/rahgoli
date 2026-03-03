@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": "Default",
   "presets": {
@@ -11,7 +20,48 @@
       "colors_background_2": "#ffffff",
       "colors_placeholder_focus": "#6b0d0d",
       "type_header_font_family": "Playfair Display",
-      "type_body_font_family": "Inter"
+      "type_body_font_family": "Inter",
+      "color_schemes": [
+        {
+          "id": "scheme-1",
+          "settings": {
+            "background": "#fdf6e3",
+            "background_gradient": "",
+            "text": "#1a1a1a",
+            "shadow": "#000000",
+            "button": "#6b0d0d",
+            "button_label": "#ffffff",
+            "secondary_button_label": "#1a1a1a",
+            "outline_button": "#1a1a1a"
+          }
+        },
+        {
+          "id": "scheme-2",
+          "settings": {
+            "background": "#ffffff",
+            "background_gradient": "",
+            "text": "#1a1a1a",
+            "shadow": "#000000",
+            "button": "#1a1a1a",
+            "button_label": "#ffffff",
+            "secondary_button_label": "#1a1a1a",
+            "outline_button": "#1a1a1a"
+          }
+        },
+        {
+          "id": "scheme-3",
+          "settings": {
+            "background": "#6b0d0d",
+            "background_gradient": "",
+            "text": "#ffffff",
+            "shadow": "#000000",
+            "button": "#ffffff",
+            "button_label": "#6b0d0d",
+            "secondary_button_label": "#ffffff",
+            "outline_button": "#ffffff"
+          }
+        }
+      ]
     }
   }
 }
