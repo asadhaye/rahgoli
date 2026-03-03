@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -55,6 +64,10 @@
       "next_slide": "Slide right",
       "previous_slide": "Slide left",
       "name": "Slider"
+    },
+    "meta": {
+      "tags": "Tags: {{ tags }}",
+      "page": "Page {{ page }}"
     }
   },
   "newsletter": {
@@ -64,6 +77,7 @@
   },
   "accessibility": {
     "skip_to_text": "Skip to content",
+    "skip_to_content": "Skip to content",
     "skip_to_product_info": "Skip to product information",
     "close": "Close",
     "unit_price_separator": "per",
