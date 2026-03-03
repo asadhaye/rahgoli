@@ -1,0 +1,22 @@
+query RunInput {
+  cart {
+    attribute(key: "delayed_delivery") {
+      value
+    }
+    lines {
+      id
+      quantity
+      cost {
+        totalAmount {
+          amount
+          currencyCode
+        }
+      }
+    }
+  }
+  discountNode {
+    metafield(namespace: "rahgoli", key: "discount_value") {
+      value
+    }
+  }
+}

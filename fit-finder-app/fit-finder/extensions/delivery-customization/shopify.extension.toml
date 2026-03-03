@@ -1,0 +1,17 @@
+api_version = "2024-01"
+
+[[extensions]]
+name = "delivery-customization"
+handle = "delivery-customization"
+type = "function"
+
+[extensions.capabilities]
+api_access = true
+
+[[extensions.targeting]]
+target = "purchase.delivery-customization.run"
+module = "./src/run.js"
+
+[extensions.ui.paths]
+create = "/app/delivery-customization/new"
+details = "/app/delivery-customization/:id"

@@ -1,0 +1,17 @@
+api_version = "2024-01"
+
+[[extensions]]
+name = "order-discount"
+handle = "order-discount"
+type = "function"
+
+[extensions.capabilities]
+api_access = true
+
+[[extensions.targeting]]
+target = "purchase.order-discount.run"
+module = "./src/run.js"
+
+[extensions.ui.paths]
+create = "/app/order-discount/new"
+details = "/app/order-discount/:id"

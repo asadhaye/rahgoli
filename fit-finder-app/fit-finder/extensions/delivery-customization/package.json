@@ -1,0 +1,11 @@
+{
+  "name": "delivery-customization",
+  "version": "1.0.0",
+  "dependencies": {
+    "shopify-function": "0.1.0"
+  },
+  "devDependencies": {
+    "@shopify/shopify-api": "^9.0.0",
+    "typescript": "^5.2.2"
+  }
+}

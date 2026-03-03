@@ -1,0 +1,21 @@
+# Shopify Theme
+assets/base.css.map
+config/settings_data.json
+.DS_Store
+*.log
+
+# Shopify App (fit-finder-app)
+fit-finder-app/fit-finder/node_modules/
+fit-finder-app/fit-finder/.env
+fit-finder-app/fit-finder/build/
+fit-finder-app/fit-finder/dist/
+fit-finder-app/fit-finder/public/build/
+fit-finder-app/fit-finder/.shopify/
+fit-finder-app/fit-finder/db.sqlite
+fit-finder-app/fit-finder/db.sqlite-journal
+
+# General
+node_modules/
+.npm/
+.vscode/
+*.swp

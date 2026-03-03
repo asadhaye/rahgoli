@@ -1,0 +1,6 @@
+api_version = "2024-01"
+
+[[extensions]]
+name = "fit-finder-ui"
+handle = "fit-finder-ui"
+type = "theme_app_extension"
