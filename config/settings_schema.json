@@ -1,1 +1,31 @@
-[]
+[
+  {
+    "name": "Brand Identity",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Favicon"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent Color",
+        "default": "#6B0D0D"
+      },
+      {
+        "type": "checkbox",
+        "id": "eid_mode",
+        "label": "Enable Eid Delivery Mode",
+        "default": false,
+        "info": "Toggles seasonal Eid-specific delivery confirmations on product pages."
+      },
+      {
+        "type": "text",
+        "id": "eid_festival_name",
+        "label": "Festival Name",
+        "default": "Eid-ul-Adha"
+      }
+    ]
+  }
+]
