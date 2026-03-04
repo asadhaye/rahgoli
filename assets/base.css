@@ -1,35 +1,113 @@
-/* 
+/*
   Rahgoli Design System 2026
   Direction: Heritage Luxury (Warm & Regal)
+  Based on Dawn theme base CSS with custom Rahgoli tokens
 */
 
+/* ============================================================
+   1. GOOGLE FONTS
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+
+/* ============================================================
+   2. DESIGN TOKENS
+   ============================================================ */
 :root {
-  /* Colors */
-  --color-bg: #fdf6e3; /* Antique Ivory */
-  --color-text: #1a1a1a; /* Near Black */
-  --color-accent: #6b0d0d; /* Deep Garnet/Maroon */
-  --color-secondary: #c5a059; /* Muted Gold */
+  /* Brand Colors */
+  --color-bg: #fdf6e3;
+  --color-bg-alt: #f8f0e0;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b6055;
+  --color-accent: #6b0d0d;
+  --color-accent-hover: #550a0a;
+  --color-accent-light: rgba(107, 13, 13, 0.08);
+  --color-secondary: #c5a059;
+  --color-secondary-light: #e8d5a3;
   --color-border: #e5e0d5;
+  --color-border-dark: #c8bfad;
   --color-white: #ffffff;
+  --color-black: #000000;
+  --color-success: #2d7a3a;
+  --color-warning: #b87333;
+  --color-error: #c0392b;
 
   /* Typography */
-  --font-heading: "Playfair Display", serif;
-  --font-body: "Inter", sans-serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.5rem;
+  --font-size-xl: 2rem;
+  --font-size-2xl: 2.5rem;
+  --font-size-3xl: 3.5rem;
+  --line-height-tight: 1.2;
+  --line-height-base: 1.6;
+  --letter-spacing-wide: 0.1em;
+  --letter-spacing-wider: 0.15em;
+  --letter-spacing-tight: -0.02em;
 
-  /* Spacing & Layout */
+  /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
   --spacing-lg: 4rem;
+  --spacing-xl: 6rem;
+
+  /* Layout */
+  --container-max: 1400px;
+  --container-narrow: 900px;
+  --border-radius-sm: 2px;
   --border-radius: 4px;
+  --border-radius-lg: 8px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Header */
+  --header-height: 80px;
+  --header-height-mobile: 64px;
+
+  /* Dawn compatibility — Color scheme variables */
+  --color-foreground: 26, 26, 26;
+  --color-background: 253, 246, 227;
+  --color-shadow: 26, 26, 26;
+  --color-button: 107, 13, 13;
+  --color-button-text: 255, 255, 255;
+  --color-secondary-button: 26, 26, 26;
+  --color-secondary-button-text: 255, 255, 255;
+  --color-link: 107, 13, 13;
+  --color-badge-foreground: 255, 255, 255;
+  --color-badge-background: 107, 13, 13;
+  --color-icon: 107, 13, 13;
+  --color-border: 229, 224, 213;
+  --payment-terms-background-color: rgb(var(--color-background));
+  --gradient-base-background-1: #fdf6e3;
+  --gradient-base-background-2: #f8f0e0;
+  --gradient-base-accent-1: #6b0d0d;
+  --gradient-base-accent-2: #c5a059;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap");
-
+/* ============================================================
+   3. RESET & BASE
+   ============================================================ */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -38,65 +116,760 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
-  line-height: 1.6;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ============================================================
+   4. TYPOGRAPHY
+   ============================================================ */
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
   font-family: var(--font-heading);
   font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
   margin-top: 0;
-  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+h1,
+.h1 {
+  font-size: clamp(2rem, 5vw, var(--font-size-3xl));
+}
+h2,
+.h2 {
+  font-size: clamp(1.5rem, 3.5vw, var(--font-size-2xl));
+}
+h3,
+.h3 {
+  font-size: clamp(1.25rem, 2.5vw, var(--font-size-xl));
+}
+h4,
+.h4 {
+  font-size: var(--font-size-lg);
+}
+h5,
+.h5 {
+  font-size: var(--font-size-md);
+}
+h6,
+.h6 {
+  font-size: var(--font-size-base);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  transition:
+    color var(--transition-fast),
+    opacity var(--transition-fast);
 }
 
 a:hover {
-  opacity: 0.8;
+  opacity: 0.75;
+}
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
 }
 
-.button {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background-color: var(--color-accent);
-  color: var(--color-white);
-  border: none;
-  font-family: var(--font-heading);
-  font-weight: 400;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  transition: background-color 0.3s ease;
-}
-
-.button:hover {
-  background-color: #550a0a;
-}
-
-/* Base Layout Utility */
+/* ============================================================
+   5. LAYOUT UTILITIES
+   ============================================================ */
+.page-width,
 .container {
-  max-width: 1400px;
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
 }
 
-/* Official Stockist Badge Style */
+@media screen and (max-width: 749px) {
+  .page-width,
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-to-content-link:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  clip: auto;
+  width: auto;
+  height: auto;
+}
+
+/* ============================================================
+   6. BUTTONS
+   ============================================================ */
+.button,
+button.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2.5rem;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
+  white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.button:hover,
+.button:focus-visible {
+  background-color: var(--color-accent-hover);
+  color: var(--color-white);
+  opacity: 1;
+}
+
+.button--secondary {
+  background-color: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.button--secondary:hover,
+.button--secondary:focus-visible {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+.button--ghost {
+  background-color: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border-dark);
+}
+
+.button--ghost:hover {
+  border-color: var(--color-text);
+  background-color: transparent;
+  color: var(--color-text);
+  opacity: 1;
+}
+
+.button--full {
+  width: 100%;
+}
+
+.button[disabled],
+.button[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================================
+   7. LINKS (Dawn compatibility)
+   ============================================================ */
+.link {
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  box-shadow: none;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--transition-fast);
+  background-color: transparent;
+  padding: 0;
+}
+
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+.link--text {
+  color: var(--color-text);
+}
+
+/* ============================================================
+   8. FORMS
+   ============================================================ */
+.form__label {
+  display: block;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  margin-bottom: 0.4rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.field__input,
+.select__select,
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='number'],
+input[type='password'],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field__input:focus,
+.select__select:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-light);
+}
+
+/* ============================================================
+   9. HEADER (sticky behaviour)
+   ============================================================ */
+.header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.header-wrapper.scrolled-past-header {
+  box-shadow: var(--shadow-sm);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: var(--header-height);
+  gap: 1.5rem;
+}
+
+.header--top-left,
+.header--middle-left {
+  grid-template-columns: auto 1fr auto;
+}
+
+.header__heading {
+  display: flex;
+  align-items: center;
+}
+
+.header--middle-center .header__heading {
+  justify-self: center;
+}
+
+.header__heading-link {
+  text-decoration: none;
+}
+
+.header__heading-logo {
+  height: auto;
+  max-width: 100%;
+}
+
+.header__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0.5rem 0;
+  transition: color var(--transition-fast);
+}
+
+.header__menu-item:hover,
+.header__menu-item.header__active-menu-item {
+  color: var(--color-accent);
+  opacity: 1;
+}
+
+.header__inline-menu .list-menu {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.header__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-text);
+  transition: color var(--transition-fast);
+  text-decoration: none;
+  position: relative;
+}
+
+.header__icon:hover {
+  color: var(--color-accent);
+  opacity: 1;
+}
+
+.header__icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+/* Cart bubble count */
+.cart-count-bubble {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+@media screen and (max-width: 989px) {
+  .header {
+    min-height: var(--header-height-mobile);
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .header__inline-menu {
+    display: none;
+  }
+}
+
+/* ============================================================
+   10. CART BADGE / NOTIFICATION
+   ============================================================ */
+.cart-notification {
+  position: fixed;
+  top: calc(var(--header-height) + 1rem);
+  right: 1.5rem;
+  z-index: 300;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  max-width: 340px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  transform: translateY(-1rem);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
+}
+
+.cart-notification.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   11. ANNOUNCEMENT BAR
+   ============================================================ */
+.shopify-section-header-sticky ~ .shopify-section,
+.announcement-bar {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  text-align: center;
+  padding: 0.6rem var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   12. CARDS (Products)
+   ============================================================ */
+.card {
+  position: relative;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.card__media {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-bg-alt);
+}
+
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+  display: block;
+}
+
+.card:hover .card__media img {
+  transform: scale(1.04);
+}
+
+.card__information {
+  padding: 1rem;
+}
+
+.card__heading {
+  font-size: var(--font-size-base);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.card__vendor {
+  font-size: var(--font-size-xs);
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   13. PRICE
+   ============================================================ */
+.price {
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.price--on-sale .price__regular {
+  color: var(--color-text-muted);
+}
+.price__sale {
+  color: var(--color-accent);
+}
+.price__compare {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+/* ============================================================
+   14. BADGES
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--border-radius-sm);
+}
+
+.badge--sold-out {
+  background-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.badge--on-sale {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+}
+
+.badge--ready-to-ship {
+  background-color: var(--color-success);
+  color: var(--color-white);
+}
+
+.badge--pre-order {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.badge--eid {
+  background-color: var(--color-accent);
+  color: var(--color-secondary-light);
+  border: 1px solid var(--color-secondary-light);
+}
+
+/* Official Stockist Badge */
 .stockist-badge {
   display: inline-flex;
   align-items: center;
-  font-size: 0.75rem;
+  gap: 0.4rem;
+  font-size: var(--font-size-xs);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--color-secondary);
   font-weight: 600;
-  gap: 0.5rem;
+}
+
+/* ============================================================
+   15. FOCUS STYLES (accessibility)
+   ============================================================ */
+.focus-inset:focus-visible {
+  outline: 0.2rem solid var(--color-accent);
+  outline-offset: -0.2rem;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================================
+   16. GRADIENT / DECORATIVE
+   ============================================================ */
+.gradient {
+  background: var(--gradient-base-background-1, var(--color-bg));
+}
+
+/* ============================================================
+   17. MEDIA / DEFERRED
+   ============================================================ */
+.media {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.media img,
+.media video,
+.media iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================================
+   18. DIVIDERS & SEPARATORS
+   ============================================================ */
+.section-header {
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.section-header__tagline {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-secondary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+hr,
+.separator {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--spacing-md) 0;
+}
+
+/* ============================================================
+   19. ANIMATIONS
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fade-up reveal */
+.animate-from-below {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.animate-from-below.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   20. UTILITY CLASSES
+   ============================================================ */
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+.text-muted {
+  color: var(--color-text-muted);
+}
+.text-accent {
+  color: var(--color-accent);
+}
+.text-gold {
+  color: var(--color-secondary);
+}
+.text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+.text-small {
+  font-size: var(--font-size-sm);
+}
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.mt-sm {
+  margin-top: var(--spacing-sm);
+}
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+.mt-lg {
+  margin-top: var(--spacing-lg);
+}
+.mb-sm {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+.mb-lg {
+  margin-bottom: var(--spacing-lg);
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media screen and (max-width: 749px) {
+  .small-hide {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .medium-hide {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 990px) {
+  .large-up-hide {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   21. SCROLL BAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-alt);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-dark);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ============================================================
+   22. SELECTION
+   ============================================================ */
+::selection {
+  background-color: var(--color-secondary-light);
+  color: var(--color-accent);
 }

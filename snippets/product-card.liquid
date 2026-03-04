@@ -1,120 +1,109 @@
 {% comment %}
-  Product Card Snippet for Rahgoli
+  Rahgoli Product Card Snippet
+  Usage: {% render 'product-card', product: product, lazy_load: true %}
 {% endcomment %}
 
-<style>
-  .product-card {
-    position: relative;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: var(--spacing-sm);
-    transition: transform 0.3s ease;
-  }
+{%- liquid
+  assign lazy_load = lazy_load | default: true
+  assign show_vendor = show_vendor | default: true
+-%}
 
-  .product-card:hover {
-    transform: translateY(-5px);
-  }
+<div class="product-card card" data-product-id="{{ product.id }}">
 
-  .product-card__image-wrapper {
-    position: relative;
-    aspect-ratio: 2/3;
-    overflow: hidden;
-    background-color: #F5F5F5;
-    margin-bottom: var(--spacing-sm);
-  }
+  <div class="product-card__media card__media">
+    <a href="{{ product.url }}" class="product-card__image-link" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        {{
+          product.featured_media
+          | image_url: width: 800
+          | image_tag:
+            loading: lazy_load,
+            class: 'product-card__img card__img motion-reduce',
+            sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw',
+            widths: '165, 360, 533, 720, 940, 1066',
+            alt: product.featured_media.alt | escape
+        }}
+        {%- if product.media.size > 1 and product.media[1].media_type == 'image' -%}
+          {{
+            product.media[1]
+            | image_url: width: 800
+            | image_tag:
+              loading: 'lazy',
+              class: 'product-card__img product-card__img--hover motion-reduce',
+              sizes: '(min-width: 1200px) 25vw, (min-width: 750px) 33vw, 50vw',
+              widths: '165, 360, 533, 720, 940, 1066',
+              alt: product.media[1].alt | escape
+          }}
+        {%- endif -%}
+      {%- else -%}
+        <div class="product-card__img product-card__img--placeholder">
+          {{ 'product-apparel-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </a>
 
-  .product-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s ease;
-  }
-
-  .product-card:hover .product-card__image {
-    transform: scale(1.1);
-  }
-
-  .product-card__badges {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 2;
-  }
-
-  .badge {
-    padding: 4px 8px;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-  }
-
-  .badge--accent { background-color: var(--color-accent); color: white; }
-  .badge--secondary { background-color: var(--color-secondary); color: white; }
-  .badge--white { background-color: white; color: black; border: 1px solid #EEE; }
-
-  .product-card__info {
-    text-align: center;
-  }
-
-  .product-card__vendor {
-    font-size: 0.75rem;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 2px;
-  }
-
-  .product-card__title {
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
-    margin: 0 0 var(--spacing-xs) 0;
-  }
-
-  .product-card__price {
-    font-weight: 600;
-    color: var(--color-accent);
-  }
-</style>
-
-<div class="product-card">
-  <div class="product-card__image-wrapper">
     <div class="product-card__badges">
       {%- if product.available == false -%}
-        <span class="badge badge--white">Sold Out</span>
+        <span class="badge badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
       {%- elsif product.compare_at_price > product.price -%}
-        <span class="badge badge--accent">Sale</span>
+        <span class="badge badge--on-sale">
+          {%- assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+          -{{ discount_pct }}%
+        </span>
       {%- endif -%}
-
-      {% comment %} Example Material Badge from Metafield {% endcomment %}
-      {% if product.metafields.custom.material != blank %}
-        <span class="badge badge--secondary">{{ product.metafields.custom.material }}</span>
-      {% endif %}
-
-      {% comment %} Ready to ship badge logic requested by user {% endcomment %}
-      {% if product.variants.first.inventory_quantity > 0 %}
-         <span class="badge badge--white">Ready to Ship</span>
-      {% endif %}
+      {%- if product.metafields.custom.material != blank -%}
+        <span class="badge badge--material">{{ product.metafields.custom.material }}</span>
+      {%- endif -%}
+      {%- if product.available and product.variants.first.inventory_quantity > 0 and product.compare_at_price == blank -%}
+        <span class="badge badge--ready-to-ship">✓ Ready</span>
+      {%- endif -%}
+      {%- if product.metafields.custom.launch_date != blank -%}
+        <span class="badge badge--pre-order">Pre-Order</span>
+      {%- endif -%}
     </div>
 
-    <a href="{{ product.url }}">
-      {% if product.featured_image %}
-        <img src="{{ product.featured_image | image_url: width: 600 }}" class="product-card__image" alt="{{ product.title }}">
-      {% else %}
-        <div class="product-card__image" style="background: #EEE;"></div>
-      {% endif %}
-    </a>
+    <div class="product-card__actions">
+      <a href="{{ product.url }}" class="product-card__quick-view button button--ghost">View Details</a>
+    </div>
   </div>
 
-  <div class="product-card__info">
-    <div class="product-card__vendor">{{ product.vendor }}</div>
-    <h3 class="product-card__title">
-      <a href="{{ product.url }}">{{ product.title }}</a>
+  <div class="product-card__information card__information">
+    {%- if show_vendor -%}
+      <div class="product-card__vendor card__vendor">{{ product.vendor }}</div>
+    {%- endif -%}
+    <h3 class="product-card__name card__heading">
+      <a href="{{ product.url }}" class="link link--text">{{ product.title | escape }}</a>
     </h3>
     <div class="product-card__price">
-      {{ product.price | money }}
+      {%- render 'price', product: product -%}
     </div>
   </div>
 </div>
+
+<style>
+  .product-card { display: flex; flex-direction: column; height: 100%; border: none; background: transparent; box-shadow: none; }
+  .product-card:hover { transform: none; }
+
+  .product-card__media { position: relative; overflow: hidden; background-color: var(--color-bg-alt); border-radius: var(--border-radius); aspect-ratio: 2/3; }
+  .product-card__image-link { display: block; width: 100%; height: 100%; }
+  .product-card__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease, opacity 0.4s ease; }
+  .product-card__img--hover { position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.4s ease; }
+  .product-card:hover .product-card__img:not(.product-card__img--hover) { transform: scale(1.04); }
+  .product-card:hover .product-card__img--hover { opacity: 1; }
+  .product-card__img--placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .product-card__img--placeholder svg { width: 60%; height: 60%; opacity: 0.3; }
+
+  .product-card__badges { position: absolute; top: 0.6rem; left: 0.6rem; display: flex; flex-direction: column; gap: 0.3rem; z-index: 2; }
+  .badge--material { background-color: var(--color-secondary); color: var(--color-white); }
+
+  .product-card__actions { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.75rem; background: linear-gradient(transparent, rgba(0,0,0,0.3)); display: flex; justify-content: center; transform: translateY(100%); transition: transform 0.3s ease; }
+  .product-card:hover .product-card__actions { transform: translateY(0); }
+  .product-card__quick-view { background: var(--color-white); color: var(--color-text); font-size: var(--font-size-xs); padding: 0.5rem 1rem; border-color: transparent; letter-spacing: 0.05em; }
+
+  .product-card__information { padding: 0.75rem 0.25rem; flex: 1; }
+  .product-card__vendor { font-size: var(--font-size-xs); color: var(--color-secondary); text-transform: uppercase; letter-spacing: var(--letter-spacing-wider); font-weight: 600; margin-bottom: 0.3rem; }
+  .product-card__name { font-size: 0.95rem; font-family: var(--font-heading); font-weight: 600; margin: 0 0 0.4rem; line-height: 1.3; }
+  .product-card__name a { color: var(--color-text); text-decoration: none; }
+  .product-card__name a:hover { color: var(--color-accent); opacity: 1; }
+  .product-card__price { font-size: var(--font-size-sm); }
+</style>
